@@ -1,0 +1,28 @@
+{
+    "name": "poluektov-software/laravel-relation-restore",
+    "description": "Package to remove and restore related models",
+    "keywords": [
+        "laravel",
+        "model",
+        "relation",
+        "restore"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Konstantin Poluektov",
+            "email": "poluektovkv@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Poluektov\\RelationRestore\\": "src"
+        }
+    }
+}
