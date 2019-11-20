@@ -1,15 +1,34 @@
 # Laravel Relation Restore
 
-## Описание
+[Документация на русском](README-ru.md)
 
-Laravel Relation Restore - пакет Laravel для удаления и восстановления связанных моделей. 
-Данный пакет использует метод мягкого удаления. Пакет может быть полезен там, где требуется удалять 
-и восстанавливать модели со сложными цепочками связанных моделей.
+## Description
 
-## Использование
+Laravel Relation Restore - Laravel package for deleting and restoring related models. 
+This package uses the soft delete method. The package can be useful where you want to delete 
+and restore models with complex chains of related models.
 
-В базе данных для каждой модели необходимо создать дополнительное поле. 
-В миграциях, например, можно добавлять следующую строку:
+## Installation
+
+Add the following to your require part within the composer.json: 
+
+```json
+"poluektov-software/laravel-relation-restore": "*"
+```
+```batch
+$ php composer update
+```
+
+or
+
+```
+$ php composer require poluektov-software/laravel-relation-restore
+```
+
+## Usage
+
+In the database, you must create an additional field for each model. 
+In migrations, for example, you can add the following line:
 
 ```php
 //...
@@ -17,7 +36,7 @@ $table->integer( 'remove_code' )->nullable();
 //...
 ```
 
-Необходимо подключить трейт **RelationRestore** к вашим моделям.
+You need to use the **Relationship Restore** trait in your models:
 
 ```php
 //...
@@ -34,7 +53,7 @@ class Model
 //...
 ```
 
-В каждой модели необходимо прописать уникальный код:
+Each model must have a unique code:
 
 ```php
 //...
@@ -42,8 +61,8 @@ class Model
 //...
 ```
 
-Удалять и восстанавливать связанные модели необходимо через методы 
-**autoRemove** и **autoRestore** соответственно.
+You must delete and restore related models through methods 
+**autoRemove** and **autoRestore** respectively:
 
 ```php
     /**

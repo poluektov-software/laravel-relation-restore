@@ -17,7 +17,8 @@ trait RelationRestore
     use SoftDeletes;
 
     /**
-     * Имя поля признака автоматического удаления.
+     * Имя поля (по умолчанию) признака автоматического удаления.
+     * Можно переопределить в модели.
      *
      * @var string
      */
@@ -25,8 +26,9 @@ trait RelationRestore
 
     /**
      * Код автоматического удаления.
+     * Необходимо установить уникальное значение в модели.
      *
-     * @var
+     * @var int
      */
     protected $autoRemoveCode = null;
 
@@ -41,16 +43,18 @@ trait RelationRestore
      */
     public function scopeWithAutoRemoved( Builder $query, int $autoRemoveCode = null )
     {
-        return $query->where( function ( $query ) use ( $autoRemoveCode ) {
+        $deletedAt = $this->getDeletedAtColumn();
 
-            $query->whereNotNull( $this->table . '.deleted_at' );
+        return $query->where( function ( $query ) use ( $autoRemoveCode, $deletedAt ) {
+
+            $query->whereNotNull( "$this->table.$deletedAt" );
 
             $autoRemoveCode
-                ? $query->where( $this->table .  '.' . $this->autoRemoveName, $autoRemoveCode )
-                : $query->whereNotNull( $this->table .  '.' . $this->autoRemoveName );
+                ? $query->where( "$this->table.$this->autoRemoveName", $autoRemoveCode )
+                : $query->whereNotNull( "$this->table.$this->autoRemoveName" );
         } )
             ->withTrashed()
-            ->orWhereNull( $this->table . '.deleted_at' );
+            ->orWhereNull( "$this->table.$deletedAt" );
     }
 
     /**
